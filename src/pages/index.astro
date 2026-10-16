@@ -1,0 +1,36 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Hero from '@/components/Hero.astro';
+import Conveniencias from '@/components/Conveniencias.astro';
+import Servicos from '@/components/Servicos.astro';
+import Sobre from '@/components/Sobre.astro';
+import Estrutura from '@/components/Estrutura.astro';
+import Ambiental from '@/components/Ambiental.astro';
+import Avaliacoes from '@/components/Avaliacoes.astro';
+import Entrega from '@/components/Entrega.astro';
+import Contato from '@/components/Contato.astro';
+import Rodape from '@/components/Rodape.astro';
+import WhatsAppFlutuante from '@/components/WhatsAppFlutuante.astro';
+---
+
+<Base
+  title="Marcelino Peças e Acessórios | Autopeças e oficina no Jardim Iracema, Fortaleza"
+  description="Autopeças e oficina mecânica no Jardim Iracema, em Fortaleza, há mais de 30 anos. Especialistas em suspensão, freios, embreagem, baterias e elétrica. Peça orçamento no WhatsApp."
+  schema
+>
+  <Header />
+  <main id="conteudo">
+    <Hero />
+    <Conveniencias />
+    <Servicos />
+    <Sobre />
+    <Estrutura />
+    <Ambiental />
+    <Avaliacoes />
+    <Entrega />
+    <Contato />
+  </main>
+  <Rodape />
+  <WhatsAppFlutuante />
+</Base>

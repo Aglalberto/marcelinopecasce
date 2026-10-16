@@ -1,0 +1,61 @@
+---
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
+import { empresa } from '@/data/empresa';
+---
+
+<section class="entrega" aria-labelledby="entrega-titulo">
+  <div class="container entrega__grade">
+    <Icon name="entrega" size={56} class="entrega__icone" />
+    <div class="entrega__texto">
+      <h2 id="entrega-titulo">Precisa da peça e não pode vir buscar?</h2>
+      <p>
+        Fazemos entrega de peças, dependendo da sua região. Mande seu endereço ou o da sua empresa
+        no WhatsApp e a gente confirma.
+      </p>
+    </div>
+    <Button
+      href={empresa.whatsapp.linkEntrega}
+      variant="secondary"
+      icon="whatsapp"
+      size="lg"
+      external
+      event="whatsapp-click"
+      eventLocal="entrega"
+    >
+      Consultar entrega no WhatsApp
+    </Button>
+  </div>
+</section>
+
+<style>
+  .entrega {
+    background: var(--color-amarelo);
+    color: var(--color-azul-950);
+    padding-block: 3.5rem;
+  }
+  .entrega__grade {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+  }
+  .entrega__grade :global(.entrega__icone) {
+    color: var(--color-azul);
+  }
+  .entrega h2 {
+    font-size: clamp(1.75rem, 1.35rem + 1.7vw, 2.6rem);
+    font-weight: 800;
+  }
+  .entrega p {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    max-width: 36rem;
+  }
+  @media (min-width: 960px) {
+    .entrega__grade {
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 2.5rem;
+    }
+  }
+</style>

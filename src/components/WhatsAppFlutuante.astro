@@ -1,0 +1,68 @@
+---
+import Icon from './ui/Icon.astro';
+import { empresa } from '@/data/empresa';
+---
+
+<a
+  href={empresa.whatsapp.link}
+  class="wpp"
+  target="_blank"
+  rel="noopener"
+  aria-label="Chamar a Marcelino no WhatsApp"
+  data-umami-event="whatsapp-click"
+  data-umami-event-local="flutuante"
+  data-wpp
+>
+  <Icon name="whatsapp" size={30} />
+</a>
+
+<script>
+  // Aparece depois que o hero sai da tela, para não repetir o botão principal.
+  const botao = document.querySelector<HTMLElement>('[data-wpp]');
+  const hero = document.querySelector('.hero');
+  if (botao && hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) =>
+      botao.classList.toggle('wpp--visivel', !e.isIntersecting),
+    ).observe(hero);
+  } else {
+    botao?.classList.add('wpp--visivel');
+  }
+</script>
+
+<style>
+  .wpp {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    width: 3.75rem;
+    height: 3.75rem;
+    color: #fff;
+    background: #1f9e52;
+    border-radius: 50%;
+    box-shadow: 0 12px 28px -10px rgb(17 13 54 / 0.55);
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.9);
+    pointer-events: none;
+    transition:
+      opacity 0.3s,
+      transform 0.4s var(--ease-saida),
+      background-color 0.2s;
+  }
+  .wpp--visivel {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .wpp:hover {
+    background: #178a46;
+  }
+  @media (min-width: 768px) {
+    .wpp {
+      right: 1.5rem;
+      bottom: 1.5rem;
+    }
+  }
+</style>

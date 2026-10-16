@@ -1,0 +1,225 @@
+---
+import logo from '@/assets/brand/marcelino-horizontal-colorido-rgb.svg';
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
+import { empresa } from '@/data/empresa';
+
+const links = [
+  { href: '/#servicos', label: 'Serviços' },
+  { href: '/#sobre', label: 'Sobre' },
+  { href: '/#avaliacoes', label: 'Avaliações' },
+  { href: '/#contato', label: 'Contato' },
+];
+---
+
+<header class="topo" id="topo">
+  <div class="container topo__linha">
+    <a href="/" class="topo__logo" aria-label={`${empresa.nome}, página inicial`}>
+      <img src={logo.src} width="828" height="225" alt="" decoding="async" fetchpriority="high" />
+    </a>
+
+    <nav class="topo__nav" id="menu" aria-label="Principal">
+      <ul>
+        {links.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="topo__acoes">
+      <Button
+        href={empresa.whatsapp.link}
+        icon="whatsapp"
+        external
+        event="whatsapp-click"
+        eventLocal="header"
+        class="topo__cta"
+      >
+        Chamar no WhatsApp
+      </Button>
+      <button
+        type="button"
+        class="topo__menu"
+        aria-controls="menu"
+        aria-expanded="false"
+        aria-label="Abrir menu"
+      >
+        <span class="icone-abrir">
+          <Icon name="menu" size={26} />
+        </span>
+        <span class="icone-fechar">
+          <Icon name="fechar" size={26} />
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const topo = document.getElementById('topo');
+  const botao = topo?.querySelector<HTMLButtonElement>('.topo__menu');
+  const nav = document.getElementById('menu');
+
+  // Header compacto ao rolar
+  const atualizar = () => topo?.classList.toggle('topo--compacto', window.scrollY > 24);
+  atualizar();
+  window.addEventListener('scroll', atualizar, { passive: true });
+
+  // Menu mobile
+  const fechar = () => {
+    botao?.setAttribute('aria-expanded', 'false');
+    botao?.setAttribute('aria-label', 'Abrir menu');
+    topo?.classList.remove('topo--aberto');
+  };
+  botao?.addEventListener('click', () => {
+    const aberto = botao.getAttribute('aria-expanded') === 'true';
+    if (aberto) return fechar();
+    botao.setAttribute('aria-expanded', 'true');
+    botao.setAttribute('aria-label', 'Fechar menu');
+    topo?.classList.add('topo--aberto');
+  });
+  nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', fechar));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && topo?.classList.contains('topo--aberto')) {
+      fechar();
+      botao?.focus();
+    }
+  });
+</script>
+
+<style>
+  .topo {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(255 255 255 / 0.96);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid transparent;
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s;
+  }
+  .topo--compacto {
+    border-bottom-color: var(--color-linha);
+    box-shadow: 0 8px 24px -18px rgb(17 13 54 / 0.4);
+  }
+  .topo__linha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: 4.75rem;
+    transition: height 0.3s var(--ease-saida);
+  }
+  .topo--compacto .topo__linha {
+    height: 4rem;
+  }
+  .topo__logo img {
+    display: block;
+    width: auto;
+    height: 3.6rem;
+    transition: height 0.3s var(--ease-saida);
+  }
+  .topo--compacto .topo__logo img {
+    height: 3rem;
+  }
+  .topo__logo {
+    margin-left: -0.6rem; /* compensa a margem interna do arquivo do logo */
+  }
+  .topo__nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .topo__nav a {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-azul-950);
+    text-decoration: none;
+    padding-block: 0.5rem;
+    background: linear-gradient(var(--color-amarelo), var(--color-amarelo)) left bottom / 0 3px
+      no-repeat;
+    transition: background-size 0.25s var(--ease-saida);
+  }
+  .topo__nav a:hover {
+    background-size: 100% 3px;
+  }
+  .topo__acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .topo__menu {
+    display: none;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    color: var(--color-azul);
+    background: none;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .icone-fechar {
+    display: none;
+  }
+  .topo--aberto .icone-abrir {
+    display: none;
+  }
+  .topo--aberto .icone-fechar {
+    display: block;
+  }
+
+  @media (max-width: 959px) {
+    .topo__menu {
+      display: grid;
+    }
+    .topo__nav {
+      position: absolute;
+      top: 100%;
+      inset-inline: 0;
+      background: var(--color-branco);
+      border-bottom: 1px solid var(--color-linha);
+      box-shadow: 0 20px 30px -24px rgb(17 13 54 / 0.5);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition:
+        opacity 0.2s,
+        transform 0.25s var(--ease-saida),
+        visibility 0s 0.25s;
+    }
+    .topo--aberto .topo__nav {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity 0.2s,
+        transform 0.25s var(--ease-saida);
+    }
+    .topo__nav ul {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 1.25rem 1.25rem;
+    }
+    .topo__nav a {
+      display: block;
+      padding: 0.9rem 0;
+      font-size: 1.15rem;
+      border-bottom: 1px solid var(--color-linha);
+      background: none;
+    }
+  }
+  @media (max-width: 639px) {
+    .topo__cta {
+      display: none;
+    }
+    .topo__logo img {
+      height: 3.1rem;
+    }
+  }
+</style>

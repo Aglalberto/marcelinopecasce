@@ -1,0 +1,116 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Rodape from '@/components/Rodape.astro';
+import Stripes from '@/components/ui/Stripes.astro';
+import { empresa } from '@/data/empresa';
+import { analytics } from '@/data/analytics';
+
+const temUmami = Boolean(analytics.umami.websiteId);
+const temCS = Boolean(analytics.contentsquare.tagId);
+---
+
+<Base
+  title="Política de privacidade | Marcelino Peças e Acessórios"
+  description="Como a Marcelino Peças e Acessórios trata os dados de quem visita o site."
+>
+  <Header />
+  <main id="conteudo" class="priv">
+    <div class="container priv__corpo">
+      <Stripes />
+      <h1>Política de privacidade</h1>
+      <p class="priv__data">Atualizada em outubro de 2026.</p>
+
+      <p>
+        Este site é da {empresa.nome}, localizada na {empresa.endereco.rua},{' '}
+        {empresa.endereco.bairro},{empresa.endereco.cidade} – {empresa.endereco.uf}. Aqui
+        explicamos, de forma simples, quais dados coletamos quando você visita o site e para quê.
+        Seguimos a Lei Geral de Proteção de Dados (LGPD).
+      </p>
+
+      <h2>O que coletamos</h2>
+      <p>
+        O site não tem formulários e não pede seus dados pessoais. Quando você fala com a gente pelo
+        WhatsApp ou por telefone, a conversa acontece nesses canais, com as regras de cada um.
+      </p>
+
+      {temUmami && (
+        <>
+          <h2>Contagem de visitas (Umami)</h2>
+          <p>
+            Usamos o Umami para saber quantas pessoas visitam o site, de onde vêm e quais botões são
+            mais usados, como "Chamar no WhatsApp". O Umami não usa cookies, não identifica você e
+            mostra apenas números agregados. Por isso ele funciona sem pedir consentimento.
+          </p>
+        </>
+      )}
+
+      {temCS && (
+        <>
+          <h2>Mapas de calor e gravação de navegação (Contentsquare)</h2>
+          <p>
+            Se você clicar em "Aceitar" no aviso de privacidade, usamos o Contentsquare para
+            entender como as pessoas navegam: onde clicam, até onde rolam a página e onde têm
+            dificuldade. Isso inclui gravações da navegação e o uso de cookies.
+          </p>
+          <p>
+            Se você clicar em "Recusar", o Contentsquare não é carregado. Você pode mudar sua
+            escolha a qualquer momento em "Preferências de cookies", no rodapé do site.
+          </p>
+        </>
+      )}
+
+      <h2>Mapa do Google</h2>
+      <p>
+        O mapa da seção de contato só é carregado se você clicar em "Ver mapa". Nesse momento, o
+        Google Maps passa a funcionar na página, com a política de privacidade do Google.
+      </p>
+
+      <h2>Seus direitos e contato</h2>
+      <p>
+        Você pode pedir informações sobre seus dados ou tirar dúvidas sobre esta política pelo
+        WhatsApp{' '}
+        <a href={empresa.whatsapp.link} class="link" target="_blank" rel="noopener">
+          {empresa.whatsapp.exibicao}
+        </a>{' '}
+        ou pelo telefone{' '}
+        <a href={`tel:${empresa.telefones[0].tel}`} class="link">
+          {empresa.telefones[0].exibicao}
+        </a>
+        .
+      </p>
+
+      <p>
+        <a href="/" class="link">
+          Voltar para a página inicial
+        </a>
+      </p>
+    </div>
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .priv {
+    background: var(--color-papel);
+    padding-block: 3.5rem 5rem;
+  }
+  .priv__corpo {
+    max-width: 44rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+  .priv h1 {
+    font-size: clamp(2.2rem, 1.6rem + 2.5vw, 3.25rem);
+    font-weight: 800;
+    color: var(--color-azul-950);
+  }
+  .priv h2 {
+    font-size: 1.5rem;
+    color: var(--color-azul-950);
+    margin-top: 1.5rem;
+  }
+  .priv__data {
+    color: var(--color-aco);
+  }
+</style>

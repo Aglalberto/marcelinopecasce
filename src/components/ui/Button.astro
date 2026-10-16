@@ -1,0 +1,46 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon from './Icon.astro';
+import type { IconName } from './icons';
+
+type Variant = 'primary' | 'secondary' | 'ghost-light' | 'ghost-dark';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  variant?: Variant;
+  icon?: IconName;
+  size?: 'md' | 'lg';
+  external?: boolean;
+  /** Nome do evento no Umami. */
+  event?: string;
+  /** Propriedade "local" do evento (ex.: hero, header). */
+  eventLocal?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  icon,
+  size = 'md',
+  external = false,
+  event,
+  eventLocal,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener' : undefined}
+  data-umami-event={event}
+  data-umami-event-local={eventLocal}
+  {...rest}
+>
+  {icon && <Icon name={icon} size={size === 'lg' ? 22 : 20} />}
+  <span>
+    <slot />
+  </span>
+</a>

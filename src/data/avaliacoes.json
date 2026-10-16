@@ -1,0 +1,44 @@
+{
+  "fonte": "Google Maps",
+  "coletadoEm": "2026-10-16",
+  "notaMedia": 4.2,
+  "totalAvaliacoes": 201,
+  "avaliacoes": [
+    {
+      "nome": "Italo A.",
+      "nota": 5,
+      "quando": "há 2 anos",
+      "texto": "Loja bastante honesta. Consertaram meu carro usando apenas o necessário, sem tentar empurrar peças ou gastos desnecessários. Entreguei o carro de manhã e recebi no final da tarde. O Marcelino é bastante atencioso e combina tudo com o cliente, sempre prestando as informações necessárias!"
+    },
+    {
+      "nome": "Shirley R.",
+      "nota": 5,
+      "quando": "há 3 anos",
+      "texto": "Sempre sou muito bem atendida. Saio com o problema resolvido e satisfeita."
+    },
+    {
+      "nome": "Cláudia L.",
+      "nota": 5,
+      "quando": "há 1 ano",
+      "texto": "Auto peças com ótimo atendimento e uma grande variedades de peças veicular super indico"
+    },
+    {
+      "nome": "Ademir N.",
+      "nota": 5,
+      "quando": "há 1 ano",
+      "texto": "Bom atendimento preço muito bom E as mercadorias de qualidade"
+    },
+    {
+      "nome": "Ivanildo V.",
+      "nota": 5,
+      "quando": "há 1 ano",
+      "texto": "Aqui você encontra tudo para seu carro com preço justo."
+    },
+    {
+      "nome": "Wallace M.",
+      "nota": 5,
+      "quando": "há 6 anos",
+      "texto": "Local muito bom, serviço de qualidade, e peças de ótima qualidade."
+    }
+  ]
+}

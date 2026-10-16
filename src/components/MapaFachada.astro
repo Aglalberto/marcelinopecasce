@@ -1,0 +1,164 @@
+---
+import Icon from './ui/Icon.astro';
+import { empresa } from '@/data/empresa';
+---
+
+<div class="mapa" data-mapa data-src={empresa.links.mapaEmbed}>
+  <!-- Ilustração leve no lugar do mapa: o Google Maps só carrega quando a pessoa pede. -->
+  <svg
+    class="mapa__ilustra"
+    viewBox="0 0 600 480"
+    aria-hidden="true"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <rect width="600" height="480" fill="#e3e1f4"></rect>
+    <g stroke="#ffffff" stroke-linecap="round">
+      <path d="M-20 120 640 70" stroke-width="18"></path>
+      <path d="M-20 330 640 300" stroke-width="26"></path>
+      <path d="M140 -20 190 500" stroke-width="14"></path>
+      <path d="M420 -20 380 500" stroke-width="14"></path>
+      <path d="M-20 220 640 200" stroke-width="10"></path>
+      <path d="M-20 420 640 410" stroke-width="10"></path>
+      <path d="M280 -20 300 500" stroke-width="8"></path>
+      <path d="M540 -20 520 500" stroke-width="8"></path>
+    </g>
+    <path d="M-20 330 640 300" stroke="#c4c0e8" stroke-width="2" stroke-dasharray="14 12"></path>
+    <g transform="translate(300 250)">
+      <ellipse cx="0" cy="44" rx="28" ry="8" fill="#312782" opacity="0.18"></ellipse>
+      <path d="M0 44s-34-30-34-58a34 34 0 0 1 68 0c0 28-34 58-34 58z" fill="#312782"></path>
+      <circle cx="0" cy="-14" r="13" fill="#f2c503"></circle>
+    </g>
+  </svg>
+
+  <div class="mapa__cartao">
+    <p class="mapa__nome">{empresa.nome}</p>
+    <p class="mapa__end">
+      {empresa.endereco.rua}, {empresa.endereco.bairro}
+    </p>
+    <div class="mapa__botoes">
+      <button type="button" class="mapa__btn" data-mapa-abrir data-umami-event="mapa-abrir">
+        <Icon name="mapa" size={20} /> Ver mapa
+      </button>
+      <a
+        href={empresa.links.rota}
+        class="mapa__btn mapa__btn--rota"
+        target="_blank"
+        rel="noopener"
+        data-umami-event="rota-click"
+        data-umami-event-local="mapa"
+      >
+        <Icon name="rota" size={20} /> Traçar rota
+      </a>
+    </div>
+    <p class="mapa__aviso">Ao abrir o mapa, o Google Maps é carregado nesta página.</p>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-mapa]').forEach((mapa) => {
+    mapa.querySelector('[data-mapa-abrir]')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = mapa.dataset.src ?? '';
+      iframe.title = 'Mapa com a localização da Marcelino Peças e Acessórios';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.allowFullscreen = true;
+      iframe.className = 'mapa__iframe';
+      mapa.replaceChildren(iframe);
+      mapa.classList.add('mapa--aberto');
+      iframe.focus();
+    });
+  });
+</script>
+
+<style>
+  .mapa {
+    position: relative;
+    min-height: 26rem;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--color-azul-100);
+  }
+  .mapa__ilustra {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .mapa__cartao {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    gap: 0.4rem;
+    padding: 1.25rem;
+    background: var(--color-branco);
+    border-radius: 6px;
+    box-shadow: 0 16px 40px -24px rgb(17 13 54 / 0.55);
+  }
+  .mapa__nome {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-azul-950);
+  }
+  .mapa__end {
+    color: var(--color-aco);
+  }
+  .mapa__botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+  }
+  .mapa__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.9rem;
+    padding: 0.6rem 1.1rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--color-branco);
+    background: var(--color-azul);
+    border: 2px solid var(--color-azul);
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .mapa__btn:hover {
+    background: var(--color-azul-600);
+  }
+  .mapa__btn--rota {
+    color: var(--color-azul);
+    background: var(--color-branco);
+  }
+  .mapa__btn--rota:hover {
+    background: var(--color-azul-50);
+  }
+  .mapa__aviso {
+    font-size: 0.85rem;
+    color: var(--color-aco);
+    margin-top: 0.25rem;
+  }
+  .mapa :global(.mapa__iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  @media (min-width: 960px) {
+    .mapa {
+      min-height: 100%;
+    }
+    .mapa__cartao {
+      right: auto;
+      max-width: 22rem;
+      left: 1.5rem;
+      bottom: 1.5rem;
+    }
+  }
+</style>

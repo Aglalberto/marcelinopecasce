@@ -1,0 +1,205 @@
+---
+import Section from './ui/Section.astro';
+import Stripes from './ui/Stripes.astro';
+import Icon from './ui/Icon.astro';
+import Button from './ui/Button.astro';
+import { especialidade, servicos } from '@/data/servicos';
+import { empresa } from '@/data/empresa';
+---
+
+<Section id="servicos" labelledby="servicos-titulo">
+  <div class="serv__topo">
+    <div class="titulo-secao">
+      <Stripes />
+      <h2 id="servicos-titulo">O que a gente faz pelo seu carro</h2>
+      <p>Manutenção preventiva e corretiva, com peças de reposição na própria loja.</p>
+    </div>
+  </div>
+
+  <div class="serv__grade" data-stagger>
+    <article class="serv__destaque" data-item>
+      <div class="serv__destaque-cabeca">
+        <Icon name={especialidade.icone} size={40} />
+        <p class="serv__selo">Nossa especialidade</p>
+      </div>
+      <h3>{especialidade.titulo}</h3>
+      <p class="serv__destaque-desc">{especialidade.descricao}</p>
+      <ul class="serv__itens">
+        {especialidade.itens?.map((i) => (
+          <li>
+            <Icon name="check" size={18} />
+            {i}
+          </li>
+        ))}
+      </ul>
+      <Button
+        href={empresa.whatsapp.link}
+        icon="whatsapp"
+        external
+        event="whatsapp-click"
+        eventLocal="servicos"
+        class="serv__cta"
+      >
+        Falar sobre suspensão
+      </Button>
+    </article>
+
+    <ul class="serv__lista">
+      {servicos.map((s) => (
+        <li class="serv__item" data-item>
+          <span class="serv__icone">
+            <Icon name={s.icone} size={28} />
+          </span>
+          <div>
+            <h3>{s.titulo}</h3>
+            <p>{s.descricao}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<script>
+  import { animate, inView, stagger } from 'motion';
+
+  const grade = document.querySelector('[data-stagger]');
+  const reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (grade && !reduzir) {
+    const itens = grade.querySelectorAll<HTMLElement>('[data-item]');
+    itens.forEach((i) => (i.style.opacity = '0'));
+    inView(
+      grade,
+      () => {
+        animate(
+          itens,
+          { opacity: [0, 1], y: [28, 0] },
+          { delay: stagger(0.07), duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+        );
+      },
+      { amount: 0.15 },
+    );
+  }
+</script>
+
+<style>
+  .serv__grade {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .serv__destaque {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+    padding: 2rem 1.5rem;
+    background: var(--color-azul);
+    color: var(--color-branco);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .serv__destaque::after {
+    /* barra da marca atravessando o card */
+    content: '';
+    position: absolute;
+    right: -2rem;
+    bottom: 1.5rem;
+    width: 9rem;
+    height: 1rem;
+    background: var(--color-amarelo);
+    transform: skewX(var(--skew-marca));
+  }
+  .serv__destaque-cabeca {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-amarelo);
+  }
+  .serv__selo {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-azul-950);
+    background: var(--color-amarelo);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+  }
+  .serv__destaque h3 {
+    font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.4rem);
+    font-weight: 800;
+  }
+  .serv__destaque-desc {
+    color: var(--color-azul-100);
+    font-size: 1.1rem;
+    max-width: 30rem;
+  }
+  .serv__itens {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1rem;
+  }
+  .serv__itens li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+  }
+  .serv__itens :global(svg) {
+    color: var(--color-amarelo);
+    flex: none;
+  }
+  .serv__destaque :global(.serv__cta) {
+    justify-self: start;
+    margin-bottom: 1.5rem;
+  }
+
+  .serv__lista {
+    display: grid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-linha);
+  }
+  .serv__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.1rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--color-linha);
+  }
+  .serv__icone {
+    display: grid;
+    place-items: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    color: var(--color-azul);
+    background: var(--color-azul-50);
+    border-radius: 6px;
+  }
+  .serv__item h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-azul-950);
+  }
+  .serv__item p {
+    color: var(--color-aco);
+    margin-top: 0.25rem;
+  }
+
+  @media (min-width: 960px) {
+    .serv__grade {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 3.5rem;
+      align-items: start;
+    }
+    .serv__destaque {
+      padding: 2.75rem 2.5rem;
+      position: sticky;
+      top: 6rem;
+    }
+  }
+</style>

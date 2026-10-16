@@ -1,0 +1,151 @@
+---
+import '@fontsource/jost/latin-600.css';
+import '@fontsource/jost/latin-700.css';
+import '@fontsource/jost/latin-800.css';
+import '@fontsource/barlow/latin-400.css';
+import '@fontsource/barlow/latin-500.css';
+import '@fontsource/barlow/latin-600.css';
+import '@/styles/global.css';
+
+import jost800 from '@fontsource/jost/files/jost-latin-800-normal.woff2?url';
+import barlow400 from '@fontsource/barlow/files/barlow-latin-400-normal.woff2?url';
+
+import { empresa, horario } from '@/data/empresa';
+import { analytics } from '@/data/analytics';
+import CookieBanner from '@/components/CookieBanner.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Inclui o JSON-LD da empresa (apenas na home). */
+  schema?: boolean;
+  noindex?: boolean;
+}
+
+const { title, description, schema = false, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+
+const diasSchema = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['AutoPartsStore', 'AutoRepair'],
+  '@id': `${empresa.site}/#empresa`,
+  name: empresa.nome,
+  description: empresa.tagline,
+  url: empresa.site,
+  logo: `${empresa.site}/logo-marcelino.png`,
+  image: ogImage,
+  telephone: empresa.telefones[0].tel,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: empresa.endereco.rua,
+    addressLocality: empresa.endereco.cidade,
+    addressRegion: empresa.endereco.uf,
+    postalCode: empresa.endereco.cep,
+    addressCountry: empresa.endereco.pais,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: empresa.endereco.lat,
+    longitude: empresa.endereco.lng,
+  },
+  areaServed: { '@type': 'City', name: 'Fortaleza' },
+  openingHoursSpecification: Object.entries(horario)
+    .filter(([, t]) => t)
+    .map(([d, t]) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: `https://schema.org/${diasSchema[Number(d)]}`,
+      opens: t!.abre,
+      closes: t!.fecha,
+    })),
+  sameAs: [empresa.links.instagram, empresa.links.googlePerfil],
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: `+${empresa.whatsapp.numero}`,
+      contactType: 'customer service',
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#312782" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="preload" href={jost800} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={barlow400} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={empresa.nome} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo da Marcelino Peças e Acessórios" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    {analytics.umami.websiteId && analytics.umami.scriptSrc && (
+      <script
+        defer
+        src={analytics.umami.scriptSrc}
+        data-website-id={analytics.umami.websiteId}
+        data-domains={analytics.umami.domains}
+      />
+    )}
+  </head>
+  <body>
+    <a href="#conteudo" class="pular">
+      Pular para o conteúdo
+    </a>
+    <slot />
+    <CookieBanner />
+  </body>
+</html>
+
+<style is:global>
+  @view-transition {
+    navigation: auto;
+  }
+  .pular {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--color-amarelo);
+    color: var(--color-azul-950);
+    font-weight: 600;
+    border-radius: 4px;
+    transition: top 0.2s;
+  }
+  .pular:focus {
+    top: 1rem;
+  }
+</style>

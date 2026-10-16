@@ -1,0 +1,233 @@
+---
+import Section from './ui/Section.astro';
+import Stripes from './ui/Stripes.astro';
+import Icon from './ui/Icon.astro';
+import Button from './ui/Button.astro';
+import MapaFachada from './MapaFachada.astro';
+import { empresa, horarioResumo } from '@/data/empresa';
+
+const diasPorLinha = ['1,2,3,4,5', '6', '0'];
+---
+
+<Section id="contato" labelledby="contato-titulo">
+  <div class="contato">
+    <div class="contato__info">
+      <div class="titulo-secao">
+        <Stripes />
+        <h2 id="contato-titulo">Fale com a gente ou venha nos visitar</h2>
+      </div>
+
+      <Button
+        href={empresa.whatsapp.link}
+        icon="whatsapp"
+        size="lg"
+        external
+        event="whatsapp-click"
+        eventLocal="contato"
+        class="contato__wpp"
+      >
+        Chamar no WhatsApp {empresa.whatsapp.exibicao}
+      </Button>
+
+      <dl class="contato__dados">
+        <div class="contato__bloco">
+          <dt>
+            <Icon name="pin" size={22} /> Endereço
+          </dt>
+          <dd>
+            <address>
+              {empresa.endereco.rua}
+              <br />
+              {empresa.endereco.bairro}, {empresa.endereco.cidade} – {empresa.endereco.uf}
+              <br />
+              CEP {empresa.endereco.cep}
+            </address>
+            <a
+              href={empresa.links.rota}
+              class="link contato__rota"
+              target="_blank"
+              rel="noopener"
+              data-umami-event="rota-click"
+              data-umami-event-local="contato"
+            >
+              Traçar rota no Google Maps
+            </a>
+          </dd>
+        </div>
+
+        <div class="contato__bloco">
+          <dt>
+            <Icon name="relogio" size={22} /> Horário
+          </dt>
+          <dd>
+            <table class="contato__horario">
+              <caption class="visually-hidden">Horário de funcionamento</caption>
+              <tbody>
+                {horarioResumo.map((h, i) => (
+                  <tr data-dias={diasPorLinha[i]}>
+                    <th scope="row">{h.dias}</th>
+                    <td>{h.horas}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </dd>
+        </div>
+
+        <div class="contato__bloco">
+          <dt>
+            <Icon name="telefone" size={22} /> Telefones
+          </dt>
+          <dd>
+            <ul class="contato__tels">
+              {empresa.telefones.map((t) => (
+                <li>
+                  <a
+                    href={`tel:${t.tel}`}
+                    data-umami-event="telefone-click"
+                    data-umami-event-numero={t.exibicao}
+                  >
+                    {t.exibicao}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+
+        <div class="contato__bloco">
+          <dt>
+            <Icon name="instagram" size={22} /> Instagram
+          </dt>
+          <dd>
+            <a
+              href={empresa.links.instagram}
+              class="link"
+              target="_blank"
+              rel="noopener"
+              data-umami-event="instagram-click"
+              data-umami-event-local="contato"
+            >
+              {empresa.links.instagramUsuario}
+            </a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <MapaFachada />
+  </div>
+</Section>
+
+<script>
+  import { agoraEmFortaleza } from '@/lib/horario';
+  const { dia } = agoraEmFortaleza();
+  document.querySelectorAll<HTMLElement>('[data-dias]').forEach((tr) => {
+    if (tr.dataset.dias?.split(',').includes(String(dia))) {
+      tr.classList.add('hoje');
+      tr.setAttribute('aria-current', 'date');
+    }
+  });
+</script>
+
+<style>
+  .contato {
+    display: grid;
+    gap: 3rem;
+  }
+  .contato__info {
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .contato__info :global(.contato__wpp) {
+    justify-self: start;
+    white-space: normal;
+  }
+  .contato__dados {
+    display: grid;
+    gap: 1.75rem;
+    margin: 0;
+  }
+  .contato__bloco {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .contato__bloco dt {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--color-azul-950);
+  }
+  .contato__bloco dt :global(svg) {
+    color: var(--color-azul);
+  }
+  .contato__bloco dd {
+    margin: 0;
+    padding-left: 1.85rem;
+    color: var(--color-grafite);
+  }
+  address {
+    font-style: normal;
+  }
+  .contato__rota {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: var(--color-azul);
+    padding-block: 0.4rem;
+  }
+  .contato__horario {
+    border-collapse: collapse;
+  }
+  .contato__horario th,
+  .contato__horario td {
+    text-align: left;
+    padding: 0.3rem 0;
+  }
+  .contato__horario th {
+    font-weight: 500;
+    padding-right: 1.5rem;
+  }
+  .contato__horario :global(tr.hoje) {
+    font-weight: 700;
+    color: var(--color-azul);
+  }
+  .contato__horario :global(tr.hoje) th::after {
+    content: ' (hoje)';
+    font-weight: 500;
+    color: var(--color-aco);
+  }
+  .contato__tels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .contato__tels a {
+    display: inline-block;
+    padding-block: 0.45rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-azul);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .contato__tels a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-amarelo);
+    text-decoration-thickness: 2px;
+  }
+  @media (min-width: 960px) {
+    .contato {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 4rem;
+      align-items: stretch;
+    }
+  }
+</style>

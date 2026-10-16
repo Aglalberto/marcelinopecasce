@@ -1,0 +1,176 @@
+---
+import Section from './ui/Section.astro';
+import Stripes from './ui/Stripes.astro';
+import Icon from './ui/Icon.astro';
+import Button from './ui/Button.astro';
+import dados from '@/data/avaliacoes.json';
+import { empresa } from '@/data/empresa';
+
+const nota = dados.notaMedia.toLocaleString('pt-BR', { minimumFractionDigits: 1 });
+---
+
+<Section id="avaliacoes" tone="dark" labelledby="aval-titulo">
+  <div class="aval__topo">
+    <div class="titulo-secao">
+      <Stripes />
+      <h2 id="aval-titulo">Quem já passou por aqui</h2>
+      <p>Avaliações reais de clientes no Google.</p>
+    </div>
+
+    <div
+      class="aval__nota"
+      aria-label={`Nota ${nota} de 5 no Google, com ${dados.totalAvaliacoes} avaliações`}
+    >
+      <p class="aval__numero" aria-hidden="true">
+        {nota}
+      </p>
+      <div aria-hidden="true">
+        <p class="aval__de">
+          <Icon name="estrela" size={20} /> de 5
+        </p>
+        <p class="aval__total">{dados.totalAvaliacoes} avaliações no Google</p>
+      </div>
+    </div>
+  </div>
+
+  <ul class="aval__lista">
+    {dados.avaliacoes.map((a) => (
+      <li class="aval__card">
+        <p class="aval__estrelas aval__estrelas--card" aria-label={`${a.nota} de 5 estrelas`}>
+          {Array.from({ length: a.nota }).map(() => (
+            <Icon name="estrela" size={16} />
+          ))}
+        </p>
+        <blockquote>
+          <p>{a.texto}</p>
+        </blockquote>
+        <p class="aval__autor">
+          <span>{a.nome}</span>
+          <span class="aval__quando">{a.quando}</span>
+        </p>
+      </li>
+    ))}
+  </ul>
+
+  <div class="aval__acoes">
+    <Button
+      href={empresa.links.googlePerfil}
+      variant="ghost-light"
+      icon="estrela"
+      external
+      event="google-avaliacoes-click"
+    >
+      Ver todas ou avaliar no Google
+    </Button>
+  </div>
+</Section>
+
+<style>
+  .aval__topo {
+    display: grid;
+    gap: 2rem;
+    align-items: end;
+  }
+  .aval__nota {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .aval__numero {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-amarelo);
+  }
+  .aval__estrelas {
+    display: flex;
+    gap: 0.15rem;
+    color: var(--color-amarelo);
+  }
+  .aval__de {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+  .aval__de :global(svg) {
+    color: var(--color-amarelo);
+  }
+  .aval__total {
+    color: var(--color-azul-100);
+    margin-top: 0.25rem;
+  }
+  .aval__lista {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(85%, 22rem);
+    gap: 1rem;
+    list-style: none;
+    padding: 0 1.25rem 0.5rem;
+    margin: 2.5rem -1.25rem 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.25rem;
+    scrollbar-width: thin;
+  }
+  .aval__card {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--color-azul-800);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    border-radius: 6px;
+  }
+  .aval__card blockquote {
+    margin: 0;
+    flex: 1;
+  }
+  .aval__card blockquote p {
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+  .aval__autor {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+  }
+  .aval__quando {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    color: var(--color-azul-200);
+  }
+  .aval__acoes {
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .aval__topo {
+      grid-template-columns: 1fr auto;
+    }
+    .aval__lista {
+      display: block;
+      columns: 2;
+      column-gap: 1rem;
+      overflow: visible;
+      padding: 0;
+      margin-inline: 0;
+    }
+    .aval__card {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+    }
+  }
+  @media (min-width: 1100px) {
+    .aval__lista {
+      columns: 3;
+    }
+  }
+</style>

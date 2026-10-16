@@ -1,0 +1,65 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Rodape from '@/components/Rodape.astro';
+import Button from '@/components/ui/Button.astro';
+import Stripes from '@/components/ui/Stripes.astro';
+import { empresa } from '@/data/empresa';
+---
+
+<Base
+  title="Página não encontrada | Marcelino Peças e Acessórios"
+  description="Página não encontrada."
+  noindex
+>
+  <Header />
+  <main id="conteudo" class="nf">
+    <div class="container nf__corpo">
+      <Stripes />
+      <h1>Essa página não existe</h1>
+      <p>O endereço pode ter mudado. Volte para o início ou fale direto com a gente.</p>
+      <div class="nf__acoes">
+        <Button href="/" variant="secondary">
+          Ir para o início
+        </Button>
+        <Button
+          href={empresa.whatsapp.link}
+          icon="whatsapp"
+          external
+          event="whatsapp-click"
+          eventLocal="404"
+        >
+          Chamar no WhatsApp
+        </Button>
+      </div>
+    </div>
+  </main>
+  <Rodape />
+</Base>
+
+<style>
+  .nf {
+    background: var(--color-papel);
+    padding-block: 5rem 7rem;
+  }
+  .nf__corpo {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 40rem;
+  }
+  .nf h1 {
+    font-size: clamp(2.2rem, 1.6rem + 2.5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--color-azul-950);
+  }
+  .nf p {
+    font-size: 1.15rem;
+    color: var(--color-aco);
+  }
+  .nf__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+</style>

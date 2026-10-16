@@ -1,0 +1,184 @@
+---
+import logoBranco from '@/assets/brand/marcelino-horizontal-branco-rgb.svg';
+import Icon from './ui/Icon.astro';
+import { empresa } from '@/data/empresa';
+import { analytics } from '@/data/analytics';
+
+const ano = new Date().getFullYear();
+const temConsentimento = Boolean(analytics.contentsquare.tagId);
+---
+
+<footer class="rodape">
+  <div class="container rodape__grade">
+    <div class="rodape__marca">
+      <img
+        src={logoBranco.src}
+        width="828"
+        height="225"
+        alt={empresa.nome}
+        loading="lazy"
+        decoding="async"
+      />
+      <p>{empresa.tagline}</p>
+    </div>
+
+    <div class="rodape__col">
+      <p class="rodape__titulo">Contato</p>
+      <ul>
+        <li>
+          <a
+            href={empresa.whatsapp.link}
+            target="_blank"
+            rel="noopener"
+            data-umami-event="whatsapp-click"
+            data-umami-event-local="rodape"
+          >
+            <Icon name="whatsapp" size={18} /> WhatsApp {empresa.whatsapp.exibicao}
+          </a>
+        </li>
+        {empresa.telefones.map((t) => (
+          <li>
+            <a
+              href={`tel:${t.tel}`}
+              data-umami-event="telefone-click"
+              data-umami-event-numero={t.exibicao}
+            >
+              <Icon name="telefone" size={18} /> {t.exibicao}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href={empresa.links.instagram}
+            target="_blank"
+            rel="noopener"
+            data-umami-event="instagram-click"
+            data-umami-event-local="rodape"
+          >
+            <Icon name="instagram" size={18} /> {empresa.links.instagramUsuario}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="rodape__col">
+      <p class="rodape__titulo">Endereço</p>
+      <address>
+        {empresa.endereco.rua}
+        <br />
+        {empresa.endereco.bairro}, {empresa.endereco.cidade} – {empresa.endereco.uf}
+        <br />
+        CEP {empresa.endereco.cep}
+      </address>
+      <p class="rodape__horario">
+        Seg a sex, 8h às 17h
+        <br />
+        Sáb, 8h às 12h
+      </p>
+    </div>
+  </div>
+
+  <div class="container rodape__base">
+    <p>
+      © {ano} {empresa.nome}
+    </p>
+    <ul>
+      <li>
+        <a href="/privacidade">Política de privacidade</a>
+      </li>
+      {temConsentimento && (
+        <li>
+          <a href="#" data-abrir-cookies>
+            Preferências de cookies
+          </a>
+        </li>
+      )}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--color-azul-950);
+    color: var(--color-azul-100);
+    padding-block: 4rem 6rem;
+  }
+  .rodape__grade {
+    display: grid;
+    gap: 2.5rem;
+  }
+  .rodape__marca img {
+    display: block;
+    width: 15rem;
+    height: auto;
+    margin-left: -0.6rem;
+  }
+  .rodape__marca p {
+    margin-top: 1rem;
+    max-width: 22rem;
+  }
+  .rodape__titulo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-branco);
+    margin-bottom: 0.75rem;
+  }
+  .rodape ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rodape__col li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-block: 0.45rem;
+    text-decoration: none;
+    color: var(--color-azul-100);
+  }
+  .rodape__col li a:hover {
+    color: var(--color-branco);
+  }
+  .rodape__col :global(svg) {
+    color: var(--color-amarelo);
+  }
+  address {
+    font-style: normal;
+  }
+  .rodape__horario {
+    margin-top: 1rem;
+  }
+  .rodape__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    font-size: 0.95rem;
+  }
+  .rodape__base ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  .rodape__base a {
+    color: var(--color-azul-100);
+    display: inline-block;
+    padding-block: 0.35rem;
+  }
+  .rodape__base a:hover {
+    color: var(--color-branco);
+  }
+  @media (min-width: 900px) {
+    .rodape__grade {
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .rodape {
+      padding-block: 5rem 2.5rem;
+    }
+  }
+</style>

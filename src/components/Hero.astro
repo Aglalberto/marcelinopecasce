@@ -1,0 +1,249 @@
+---
+import Button from './ui/Button.astro';
+import Icon from './ui/Icon.astro';
+import { empresa } from '@/data/empresa';
+---
+
+<section class="hero" aria-labelledby="hero-titulo">
+  <div class="container hero__grade">
+    <div class="hero__texto">
+      <p class="hero__status" data-status>
+        <span class="hero__ponto" aria-hidden="true"></span>
+        <span data-status-texto>Seg a sex, 8h às 17h. Sáb, 8h às 12h</span>
+      </p>
+
+      <h1 id="hero-titulo">{empresa.tagline}</h1>
+
+      <p class="hero__apoio">
+        Há mais de {empresa.anosDeMercado} anos no Jardim Iracema, cuidando de carros de passeio e
+        de frotas. Peças com garantia de fábrica e uma oficina que explica tudo antes de começar.
+      </p>
+
+      <div class="hero__acoes">
+        <Button
+          href={empresa.whatsapp.link}
+          icon="whatsapp"
+          size="lg"
+          external
+          event="whatsapp-click"
+          eventLocal="hero"
+        >
+          Pedir orçamento no WhatsApp
+        </Button>
+        <Button
+          href={empresa.links.rota}
+          icon="rota"
+          size="lg"
+          variant="ghost-dark"
+          external
+          event="rota-click"
+          eventLocal="hero"
+        >
+          Como chegar
+        </Button>
+      </div>
+
+      <p class="hero__endereco">
+        <Icon name="pin" size={18} />
+        {empresa.endereco.rua}, {empresa.endereco.bairro}
+      </p>
+    </div>
+
+    <!-- Símbolo da marca. A barra amarela se estende até a borda da tela. -->
+    <div class="hero__emblema" aria-hidden="true">
+      <svg viewBox="0 0 402.4 436.1" class="emblema" data-emblema>
+        <path
+          class="emblema__m"
+          fill="#312782"
+          d="M32.00009 326.86401 L91.28709 32.00000 L96.21109 32.00000 L203.95609 217.94202 L305.59009 32.00000 L310.71210 32.00000 L370.39410 326.86401 L305.59009 326.86401 L281.36310 196.46901 L204.74309 326.86401 L200.21010 326.86401 L117.87909 194.50101 L92.86310 326.86401 L32.00009 326.86401"
+        ></path>
+        <g class="emblema__trilho">
+          <path
+            fill="#f2c503"
+            d="M211.56799 372.54865 L-4000 372.54865 L-4000 436.09363 L198.40100 436.09363 Z"
+          ></path>
+        </g>
+        <path
+          class="emblema__traco"
+          fill="#f2c503"
+          d="M264.69098 372.54865 L238.18597 372.54865 L225.01797 436.09363 L251.52399 436.09363 Z"
+        ></path>
+        <path
+          class="emblema__traco"
+          fill="#f2c503"
+          d="M317.33548 372.54865 L290.82947 372.54865 L277.66248 436.09363 L304.16748 436.09363 Z"
+        ></path>
+        <path
+          class="emblema__traco"
+          fill="#f2c503"
+          d="M370.39410 372.54865 L343.88809 372.54865 L330.72110 436.09363 L357.22610 436.09363 Z"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { animate, stagger } from 'motion';
+  import { statusLoja } from '@/lib/horario';
+
+  // Status aberto/fechado no fuso de Fortaleza
+  const el = document.querySelector<HTMLElement>('[data-status]');
+  const texto = el?.querySelector('[data-status-texto]');
+  const atualizar = () => {
+    const s = statusLoja();
+    if (!el || !texto) return;
+    texto.textContent = s.mensagem;
+    el.dataset.aberto = String(s.aberto);
+  };
+  atualizar();
+  setInterval(atualizar, 60_000);
+
+  // Entrada coreografada do símbolo: a barra corre da esquerda, os traços chegam em sequência.
+  const reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const emblema = document.querySelector('[data-emblema]');
+  if (emblema && !reduzir) {
+    const trilho = emblema.querySelector('.emblema__trilho');
+    const tracos = emblema.querySelectorAll('.emblema__traco');
+    const m = emblema.querySelector('.emblema__m');
+    if (trilho && m) {
+      animate(trilho, { x: [-900, 0] }, { duration: 1.1, ease: [0.22, 1, 0.36, 1] });
+      animate(
+        tracos,
+        { opacity: [0, 1], x: [-60, 0] },
+        { delay: stagger(0.09, { startDelay: 0.55 }), duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+      );
+      animate(
+        m,
+        { opacity: [0, 1], y: [24, 0] },
+        { delay: 0.15, duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+      );
+    }
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-papel);
+    padding-block: 3rem 0;
+  }
+  .hero__grade {
+    display: grid;
+    gap: 1rem;
+  }
+  .hero__texto {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 1.4rem;
+    align-content: start;
+    max-width: 50rem;
+  }
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    justify-self: start;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.9rem 0.35rem 0.75rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-azul-950);
+    background: var(--color-branco);
+    border: 1px solid var(--color-linha);
+    border-radius: 999px;
+  }
+  .hero__ponto {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--color-aco);
+  }
+  [data-aberto='true'] .hero__ponto {
+    background: var(--color-verde);
+    box-shadow: 0 0 0 4px rgb(31 138 76 / 0.18);
+  }
+  [data-aberto='false'] .hero__ponto {
+    background: #b4232a;
+  }
+  .hero h1 {
+    font-size: clamp(2.35rem, 1.3rem + 3.6vw, 4.1rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--color-azul-950);
+  }
+  .hero__apoio {
+    font-size: clamp(1.1rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.55;
+    color: var(--color-aco);
+    max-width: 34rem;
+  }
+  .hero__acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.25rem;
+    margin-top: 0.4rem;
+  }
+  .hero__endereco {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.95rem;
+    color: var(--color-aco);
+  }
+  .hero__endereco :global(svg) {
+    color: var(--color-azul);
+    flex: none;
+  }
+
+  .hero__emblema {
+    position: relative;
+    justify-self: end;
+    width: min(58vw, 16rem);
+    margin-top: 0.5rem;
+  }
+  .emblema {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  /* Estado inicial antes da animação (só com JS e sem preferência por menos movimento) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .emblema__trilho {
+      transform: translateX(-900px);
+    }
+    :global(.js) .emblema__traco,
+    :global(.js) .emblema__m {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .hero__acoes :global(.btn) {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      padding-block: 5.5rem 0;
+    }
+    .hero__grade {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr);
+      align-items: end;
+      gap: 3rem;
+    }
+    .hero__texto {
+      padding-bottom: 6rem;
+    }
+    .hero__emblema {
+      width: 100%;
+      max-width: 25rem;
+      margin: 0;
+    }
+  }
+</style>

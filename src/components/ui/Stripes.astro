@@ -1,0 +1,19 @@
+---
+/**
+ * Assinatura gráfica da marca: a barra amarela inclinada seguida de três traços,
+ * tirada do símbolo. Usada como marcador de títulos e divisor.
+ */
+interface Props {
+  class?: string;
+  /** Anima a entrada da barra quando entra na tela. */
+  animate?: boolean;
+}
+const { class: className, animate = false } = Astro.props;
+---
+
+<span class:list={['stripes', { 'stripes--animate': animate }, className]} aria-hidden="true">
+  <span class="stripes__bar"></span>
+  <span class="stripes__tick"></span>
+  <span class="stripes__tick"></span>
+  <span class="stripes__tick"></span>
+</span>
