@@ -16,7 +16,7 @@ export const conveniencias: Diferencial[] = [
   },
 ];
 
-/** Seção "Estrutura e conforto". */
+/** Seção "Estrutura". */
 export const compromissos: Diferencial[] = [
   {
     titulo: 'Orçamento transparente',

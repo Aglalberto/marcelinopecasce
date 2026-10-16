@@ -7,7 +7,6 @@ Hoje o site usa imagens provisórias na identidade da marca. Para colocar as fot
 
 | Arquivo | Onde aparece | Proporção | Tamanho mínimo | Dica |
 |---|---|---|---|---|
-| `sala-de-espera.jpg` | Seção "Estrutura", foto grande | 16:9 (horizontal) | 1600 × 900 px | Sala de espera arrumada e iluminada |
 | `oficina.jpg` | Seção "Estrutura" | 4:3 | 1200 × 900 px | Oficina limpa, com elevadores e ferramentas organizadas |
 | `balcao.jpg` | Seção "Estrutura" | 4:3 | 1200 × 900 px | Balcão da loja com as prateleiras de peças ao fundo |
 
