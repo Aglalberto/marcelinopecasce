@@ -1,4 +1,5 @@
 ---
+import { u } from '@/lib/url';
 import logoBranco from '@/assets/brand/marcelino-horizontal-branco-rgb.svg';
 import Icon from './ui/Icon.astro';
 import { empresa } from '@/data/empresa';
@@ -84,7 +85,7 @@ const temConsentimento = Boolean(analytics.contentsquare.tagId);
     </p>
     <ul>
       <li>
-        <a href="/privacidade">Política de privacidade</a>
+        <a href={u('/privacidade')}>Política de privacidade</a>
       </li>
       {temConsentimento && (
         <li>

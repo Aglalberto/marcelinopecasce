@@ -1,20 +1,21 @@
 ---
+import { u } from '@/lib/url';
 import logo from '@/assets/brand/marcelino-horizontal-colorido-rgb.svg';
 import Button from './ui/Button.astro';
 import Icon from './ui/Icon.astro';
 import { empresa } from '@/data/empresa';
 
 const links = [
-  { href: '/#servicos', label: 'Serviços' },
-  { href: '/#sobre', label: 'Sobre' },
-  { href: '/#avaliacoes', label: 'Avaliações' },
-  { href: '/#contato', label: 'Contato' },
+  { href: u('/#servicos'), label: 'Serviços' },
+  { href: u('/#sobre'), label: 'Sobre' },
+  { href: u('/#avaliacoes'), label: 'Avaliações' },
+  { href: u('/#contato'), label: 'Contato' },
 ];
 ---
 
 <header class="topo" id="topo">
   <div class="container topo__linha">
-    <a href="/" class="topo__logo" aria-label={`${empresa.nome}, página inicial`}>
+    <a href={u('/')} class="topo__logo" aria-label={`${empresa.nome}, página inicial`}>
       <img src={logo.src} width="828" height="225" alt="" decoding="async" fetchpriority="high" />
     </a>
 

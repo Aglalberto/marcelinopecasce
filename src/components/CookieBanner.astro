@@ -1,4 +1,5 @@
 ---
+import { u } from '@/lib/url';
 import { analytics } from '@/data/analytics';
 const ativo = Boolean(analytics.contentsquare.tagId);
 ---
@@ -16,7 +17,7 @@ const ativo = Boolean(analytics.contentsquare.tagId);
       <p>
         Contamos visitas de forma anônima, sem cookies. Se você permitir, também usamos o
         Contentsquare para entender como o site é usado, com mapas de calor e gravação de navegação.{' '}
-        <a href="/privacidade" class="link">
+        <a href={u('/privacidade')} class="link">
           Saiba mais
         </a>
       </p>
