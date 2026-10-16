@@ -7,12 +7,12 @@ As fotos reais da oficina e do balcão já estão no site. Para trocar alguma:
 
 | Arquivo | Onde aparece | Proporção | Tamanho mínimo | Dica |
 |---|---|---|---|---|
-| `oficina.jpg` | Seção "Estrutura" | 3:4 (vertical) | 960 × 1280 px | Oficina limpa, com elevadores e ferramentas organizadas |
-| `balcao.jpg` | Seção "Estrutura" | 3:4 (vertical) | 960 × 1280 px | Balcão da loja com as prateleiras de peças ao fundo |
+| `oficina.jpg` | Seção "Estrutura" | 1:1 (quadrada) | 960 × 960 px | Oficina limpa, com elevadores e ferramentas organizadas |
+| `balcao.jpg` | Seção "Estrutura" | 1:1 (quadrada) | 960 × 960 px | Balcão da loja com as prateleiras de peças ao fundo |
 
 Recomendações:
 
 - Formato JPG, na melhor qualidade que a câmera do celular oferecer. Não precisa reduzir, o site faz isso.
-- Fotos horizontais ou verticais conforme a tabela; o recorte é automático (centro da imagem).
+- As fotos são quadradas: recorte antes de salvar, deixando o assunto principal no centro.
 - Se aparecerem pessoas (equipe ou clientes), peça autorização de uso de imagem.
 - Placas de carro de clientes devem aparecer borradas.
