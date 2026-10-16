@@ -12,7 +12,7 @@ export const analytics = {
     scriptSrc: '',
     /** data-website-id do website no Umami. */
     websiteId: '',
-    domains: 'marcelinopecasce.com.br',
+    domains: 'marcelinopecas.com.br',
   },
   contentsquare: {
     /** ID da tag (ex.: 'abc123def456'). O script é https://t.contentsquare.net/uxa/<id>.js */

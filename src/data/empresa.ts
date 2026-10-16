@@ -11,7 +11,7 @@ export const empresa = {
   tagline: 'Sua oficina de confiança e especialista em autopeças em Fortaleza.',
   fundador: 'Marcelino Jovino de Souza',
   anosDeMercado: 30,
-  site: 'https://marcelinopecasce.com.br',
+  site: 'https://marcelinopecas.com.br',
 
   endereco: {
     rua: 'Av. Coronel Carvalho, 1943',

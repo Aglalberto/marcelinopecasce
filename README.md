@@ -2,7 +2,7 @@
 
 Landing page da **Marcelino Peças e Acessórios**, autopeças e oficina mecânica no Jardim Iracema, em Fortaleza (CE).
 
-Publicado em **https://marcelinopecasce.com.br** via GitHub Pages.
+Publicado em **https://marcelinopecas.com.br** via GitHub Pages.
 
 ## Stack
 

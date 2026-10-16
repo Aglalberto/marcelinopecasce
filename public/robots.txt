@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://marcelinopecasce.com.br/sitemap-index.xml
+Sitemap: https://marcelinopecas.com.br/sitemap-index.xml

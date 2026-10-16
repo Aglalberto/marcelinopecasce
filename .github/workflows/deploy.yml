@@ -24,12 +24,6 @@ jobs:
         uses: withastro/action@v6
         with:
           node-version: 22
-        # Endereço temporário (aglalberto.github.io/marcelinopecasce) para validação.
-        # Ao ligar o domínio marcelinopecasce.com.br, remova este bloco env.
-        env:
-          SITE_URL: https://aglalberto.github.io
-          SITE_BASE: /marcelinopecasce/
-          PUBLIC_SITE_PREVIEW: '1'
 
   deploy:
     needs: build
