@@ -6,7 +6,6 @@ import Button from './ui/Button.astro';
 import MapaFachada from './MapaFachada.astro';
 import { empresa, horarioResumo } from '@/data/empresa';
 
-const diasPorLinha = ['1,2,3,4,5', '6', '0'];
 ---
 
 <Section id="contato" labelledby="contato-titulo">
@@ -63,8 +62,8 @@ const diasPorLinha = ['1,2,3,4,5', '6', '0'];
             <table class="contato__horario">
               <caption class="visually-hidden">Horário de funcionamento</caption>
               <tbody>
-                {horarioResumo.map((h, i) => (
-                  <tr data-dias={diasPorLinha[i]}>
+                {horarioResumo.map((h) => (
+                  <tr>
                     <th scope="row">{h.dias}</th>
                     <td>{h.horas}</td>
                   </tr>
@@ -119,16 +118,6 @@ const diasPorLinha = ['1,2,3,4,5', '6', '0'];
   </div>
 </Section>
 
-<script>
-  import { agoraEmFortaleza } from '@/lib/horario';
-  const { dia } = agoraEmFortaleza();
-  document.querySelectorAll<HTMLElement>('[data-dias]').forEach((tr) => {
-    if (tr.dataset.dias?.split(',').includes(String(dia))) {
-      tr.classList.add('hoje');
-      tr.setAttribute('aria-current', 'date');
-    }
-  });
-</script>
 
 <style>
   .contato {
@@ -191,15 +180,6 @@ const diasPorLinha = ['1,2,3,4,5', '6', '0'];
   .contato__horario th {
     font-weight: 500;
     padding-right: 1.5rem;
-  }
-  .contato__horario :global(tr.hoje) {
-    font-weight: 700;
-    color: var(--color-azul);
-  }
-  .contato__horario :global(tr.hoje) th::after {
-    content: ' (hoje)';
-    font-weight: 500;
-    color: var(--color-aco);
   }
   .contato__tels {
     display: flex;

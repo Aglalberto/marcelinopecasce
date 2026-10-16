@@ -7,11 +7,6 @@ import { empresa } from '@/data/empresa';
 <section class="hero" aria-labelledby="hero-titulo">
   <div class="container hero__grade">
     <div class="hero__texto">
-      <p class="hero__status" data-status>
-        <span class="hero__ponto" aria-hidden="true"></span>
-        <span data-status-texto>Seg a sex, 8h às 17h. Sáb, 8h às 12h</span>
-      </p>
-
       <h1 id="hero-titulo">{empresa.tagline}</h1>
 
       <p class="hero__apoio">
@@ -85,19 +80,6 @@ import { empresa } from '@/data/empresa';
 
 <script>
   import { animate, stagger } from 'motion';
-  import { statusLoja } from '@/lib/horario';
-
-  // Status aberto/fechado no fuso de Fortaleza
-  const el = document.querySelector<HTMLElement>('[data-status]');
-  const texto = el?.querySelector('[data-status-texto]');
-  const atualizar = () => {
-    const s = statusLoja();
-    if (!el || !texto) return;
-    texto.textContent = s.mensagem;
-    el.dataset.aberto = String(s.aberto);
-  };
-  atualizar();
-  setInterval(atualizar, 60_000);
 
   // Entrada coreografada do símbolo: a barra corre da esquerda, os traços chegam em sequência.
   const reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -140,33 +122,6 @@ import { empresa } from '@/data/empresa';
     gap: 1.4rem;
     align-content: start;
     max-width: 50rem;
-  }
-  .hero__status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    justify-self: start;
-    min-height: 2.25rem;
-    padding: 0.35rem 0.9rem 0.35rem 0.75rem;
-    font-weight: 500;
-    font-size: 0.95rem;
-    color: var(--color-azul-950);
-    background: var(--color-branco);
-    border: 1px solid var(--color-linha);
-    border-radius: 999px;
-  }
-  .hero__ponto {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 50%;
-    background: var(--color-aco);
-  }
-  [data-aberto='true'] .hero__ponto {
-    background: var(--color-verde);
-    box-shadow: 0 0 0 4px rgb(31 138 76 / 0.18);
-  }
-  [data-aberto='false'] .hero__ponto {
-    background: #b4232a;
   }
   .hero h1 {
     font-size: clamp(2.35rem, 1.3rem + 3.6vw, 4.1rem);
