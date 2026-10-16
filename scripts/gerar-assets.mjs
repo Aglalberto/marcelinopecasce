@@ -93,7 +93,6 @@ await sharp(Buffer.from(horizontal))
 
 // ---------- Placeholders das fotos ----------
 const placeholders = [
-  { arquivo: 'fachada.jpg', w: 1200, h: 1500 },
   { arquivo: 'sala-de-espera.jpg', w: 1600, h: 1000 },
   { arquivo: 'oficina.jpg', w: 1200, h: 900 },
   { arquivo: 'balcao.jpg', w: 1200, h: 900 },

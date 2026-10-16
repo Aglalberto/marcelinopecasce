@@ -7,7 +7,6 @@ Hoje o site usa imagens provisórias na identidade da marca. Para colocar as fot
 
 | Arquivo | Onde aparece | Proporção | Tamanho mínimo | Dica |
 |---|---|---|---|---|
-| `fachada.jpg` | Seção "Uma loja de família" | 4:5 (vertical) | 1200 × 1500 px | Fachada com a placa da loja, de dia, foto na altura dos olhos |
 | `sala-de-espera.jpg` | Seção "Estrutura", foto grande | 16:9 (horizontal) | 1600 × 900 px | Sala de espera arrumada e iluminada |
 | `oficina.jpg` | Seção "Estrutura" | 4:3 | 1200 × 900 px | Oficina limpa, com elevadores e ferramentas organizadas |
 | `balcao.jpg` | Seção "Estrutura" | 4:3 | 1200 × 900 px | Balcão da loja com as prateleiras de peças ao fundo |
