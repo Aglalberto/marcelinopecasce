@@ -10,16 +10,6 @@ export const conveniencias: Diferencial[] = [
     icone: 'estacionamento',
   },
   {
-    titulo: 'Wi-Fi liberado',
-    descricao: 'Internet para os clientes enquanto esperam.',
-    icone: 'wifi',
-  },
-  {
-    titulo: 'Sala de espera',
-    descricao: 'Ambiente confortável enquanto cuidamos do carro.',
-    icone: 'sofa',
-  },
-  {
     titulo: 'Entrega de peças',
     descricao: 'Levamos até você, dependendo da região.',
     icone: 'entrega',

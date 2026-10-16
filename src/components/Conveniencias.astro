@@ -57,7 +57,7 @@ import { conveniencias } from '@/data/diferenciais';
   }
   @media (min-width: 560px) {
     .conv__lista {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     }
   }
   @media (min-width: 1024px) {
@@ -65,7 +65,6 @@ import { conveniencias } from '@/data/diferenciais';
       padding-block: 2.75rem;
     }
     .conv__lista {
-      grid-template-columns: repeat(4, 1fr);
       gap: 2rem;
     }
   }
